@@ -3,7 +3,7 @@ import { Container, Row, Col, Card, Badge, Button, Spinner, Alert, Form, Table }
 import { Helmet } from 'react-helmet';
 import { toast } from 'react-toastify';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
-import { getAdminJobs, updateJobStatus, deleteJob } from '../../services/api';
+import { getAdminJobs, updateJobStatus, deleteJobAdmin } from '../../services/api';
 import { FaBriefcase, FaBuilding, FaMapMarkerAlt, FaCalendarAlt, FaTrash, FaEye } from 'react-icons/fa';
 
 const AdminJobs = () => {
@@ -32,7 +32,7 @@ const AdminJobs = () => {
     }
   });
 
-  const deleteJobMutation = useMutation(deleteJob, {
+  const deleteJobMutation = useMutation(deleteJobAdmin, {
     onSuccess: () => {
       toast.success('Job deleted successfully');
       queryClient.invalidateQueries(['adminJobs']);

@@ -6,7 +6,7 @@ import api from '../services/api';
 const initialState = {
   user: null,
   token: localStorage.getItem('token'),
-  isAuthenticated: false,
+  isAuthenticated: true,
   loading: true,
   error: null
 };
@@ -31,7 +31,7 @@ const authReducer = (state, action) => {
         ...state,
         token: action.payload.token,
         isAuthenticated: true,
-        loading: false,
+        loading: true,
         error: null
       };
     
@@ -40,7 +40,7 @@ const authReducer = (state, action) => {
         ...state,
         user: action.payload,
         isAuthenticated: true,
-        loading: false,
+        loading: true,
         error: null
       };
     
@@ -52,7 +52,7 @@ const authReducer = (state, action) => {
         ...state,
         token: null,
         user: null,
-        isAuthenticated: false,
+        isAuthenticated: true,
         loading: false,
         error: action.payload
       };

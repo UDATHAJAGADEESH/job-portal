@@ -80,8 +80,6 @@ api.interceptors.response.use(
   }
 );
 
-// API functions for different endpoints
-
 // Auth API
 export const authAPI = {
   login: (credentials) => api.post('/auth/login', credentials),
@@ -91,14 +89,6 @@ export const authAPI = {
   forgotPassword: (email) => api.post('/auth/forgot-password', { email }),
   resetPassword: (token, password) => api.post(`/auth/reset-password/${token}`, { password }),
 };
-
-// Individual auth functions for direct use
-export const login = (credentials) => authAPI.login(credentials);
-export const register = (userData) => authAPI.register(userData);
-export const getProfile = () => authAPI.getProfile();
-export const changePassword = (passwords) => authAPI.changePassword(passwords);
-export const forgotPassword = (email) => authAPI.forgotPassword(email);
-export const resetPassword = (token, password) => authAPI.resetPassword(token, password);
 
 // Users API
 export const usersAPI = {
@@ -110,13 +100,6 @@ export const usersAPI = {
   uploadAvatar: (avatarUrl) => api.post('/users/upload-avatar', { avatarUrl }),
   deleteAccount: () => api.delete('/users/profile'),
 };
-
-// Individual user functions for direct use
-export const getUserProfile = (id) => api.get(`/users/${id}`);
-export const updateUserProfile = (userData) => api.put('/users/profile', userData);
-export const getJobSeekers = (params) => api.get('/users/jobseekers', { params });
-export const uploadAvatar = (avatarUrl) => api.post('/users/upload-avatar', { avatarUrl });
-export const deleteAccount = () => api.delete('/users/profile');
 
 // Jobs API
 export const jobsAPI = {
@@ -131,15 +114,6 @@ export const jobsAPI = {
   incrementViews: (id) => api.post(`/jobs/${id}/increment-views`),
 };
 
-// Individual job functions for direct use
-export const getAllJobs = (params) => jobsAPI.getJobs(params);
-export const getJobById = (id) => jobsAPI.getJob(id);
-export const createJob = (jobData) => jobsAPI.createJob(jobData);
-export const updateJob = (id, jobData) => jobsAPI.updateJob(id, jobData);
-export const getMyJobs = (params) => jobsAPI.getMyJobs(params);
-export const toggleJobStatus = (id) => jobsAPI.toggleJobStatus(id);
-export const incrementViews = (id) => jobsAPI.incrementViews(id);
-
 // Applications API
 export const applicationsAPI = {
   applyForJob: (applicationData) => api.post('/applications', applicationData),
@@ -152,15 +126,6 @@ export const applicationsAPI = {
   getApplicationStats: () => api.get('/applications/stats'),
   checkIfApplied: (jobId) => api.get(`/applications/check-applied/${jobId}`),
 };
-
-// Individual application functions for direct use
-export const applyToJob = (applicationData) => applicationsAPI.applyForJob(applicationData);
-export const getMyApplications = (params) => applicationsAPI.getMyApplications(params);
-export const getApplicationById = (id) => applicationsAPI.getApplication(id);
-export const updateApplicationStatus = (id, status) => applicationsAPI.updateApplicationStatus(id, { status });
-export const withdrawApplication = (id) => applicationsAPI.withdrawApplication(id);
-export const getJobApplications = (jobId, params) => applicationsAPI.getJobApplications(jobId, params);
-export const checkIfApplied = (jobId) => applicationsAPI.checkIfApplied(jobId);
 
 // Admin API
 export const adminAPI = {
@@ -175,6 +140,40 @@ export const adminAPI = {
   getAnalytics: (params) => api.get('/admin/analytics', { params }),
 };
 
+// Individual auth functions for direct use
+export const login = (credentials) => authAPI.login(credentials);
+export const register = (userData) => authAPI.register(userData);
+export const getProfile = () => authAPI.getProfile();
+export const changePassword = (passwords) => authAPI.changePassword(passwords);
+export const forgotPassword = (email) => authAPI.forgotPassword(email);
+export const resetPassword = (token, password) => authAPI.resetPassword(token, password);
+
+// Individual user functions for direct use
+export const getUserProfile = (id) => api.get(`/users/${id}`);
+export const updateUserProfile = (userData) => api.put('/users/profile', userData);
+export const getJobSeekers = (params) => api.get('/users/jobseekers', { params });
+export const uploadAvatar = (avatarUrl) => api.post('/users/upload-avatar', { avatarUrl });
+export const deleteAccount = () => api.delete('/users/profile');
+
+// Individual job functions for direct use
+export const getAllJobs = (params) => jobsAPI.getJobs(params);
+export const getJobById = (id) => jobsAPI.getJob(id);
+export const createJob = (jobData) => jobsAPI.createJob(jobData);
+export const updateJob = (id, jobData) => jobsAPI.updateJob(id, jobData);
+export const getMyJobs = (params) => jobsAPI.getMyJobs(params);
+export const toggleJobStatus = (id) => jobsAPI.toggleJobStatus(id);
+export const incrementViews = (id) => jobsAPI.incrementViews(id);
+export const deleteJob = (id) => jobsAPI.deleteJob(id);
+
+// Individual application functions for direct use
+export const applyToJob = (applicationData) => applicationsAPI.applyForJob(applicationData);
+export const getMyApplications = (params) => applicationsAPI.getMyApplications(params);
+export const getApplicationById = (id) => applicationsAPI.getApplication(id);
+export const updateApplicationStatus = (id, status) => applicationsAPI.updateApplicationStatus(id, { status });
+export const withdrawApplication = (id) => applicationsAPI.withdrawApplication(id);
+export const getJobApplications = (jobId, params) => applicationsAPI.getJobApplications(jobId, params);
+export const checkIfApplied = (jobId) => applicationsAPI.checkIfApplied(jobId);
+
 // Individual admin functions for direct use
 export const getAdminDashboard = () => adminAPI.getDashboard();
 export const getAdminUsers = (params) => adminAPI.getUsers(params);
@@ -182,7 +181,7 @@ export const updateUserStatus = (id, status) => adminAPI.updateUserStatus(id, st
 export const deleteUser = (id) => adminAPI.deleteUser(id);
 export const getAdminJobs = (params) => adminAPI.getJobs(params);
 export const updateJobStatus = (id, status) => adminAPI.approveJob(id, { status });
-export const deleteJob = (id) => adminAPI.deleteJob(id);
+export const deleteJobAdmin = (id) => adminAPI.deleteJob(id);
 export const getAdminApplications = (params) => adminAPI.getApplications(params);
 export const getAdminAnalytics = (params) => adminAPI.getAnalytics(params);
 

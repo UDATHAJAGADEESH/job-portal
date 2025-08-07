@@ -2,7 +2,23 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Navbar, Nav, Container, Button, Dropdown, Form, InputGroup } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
-import { FaUser, FaSignOutAlt, FaSearch, FaBars, FaTimes } from 'react-icons/fa';
+import { 
+  FaUser, 
+  FaSignOutAlt, 
+  FaSearch, 
+  FaBars, 
+  FaTimes, 
+  FaPlus, 
+  FaBriefcase, 
+  FaUsers, 
+  FaChartBar, 
+  FaFileAlt, 
+  FaCog,
+  FaHeart,
+  FaBuilding,
+  FaUserTie,
+  FaClipboardList
+} from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
 const NavigationBar = () => {
@@ -60,22 +76,112 @@ const NavigationBar = () => {
             <Nav.Link as={Link} to="/" className={getNavLinkClass('/')}>
               Home
             </Nav.Link>
-            <Nav.Link as={Link} to="/jobs" className={getNavLinkClass('/jobs')}>
-              Jobs
-            </Nav.Link>
-            {isAuthenticated && user?.role === 'jobseeker' && (
-              <Nav.Link as={Link} to="/my-applications" className={getNavLinkClass('/my-applications')}>
-                My Applications
-              </Nav.Link>
+            
+            {/* Jobs Dropdown */}
+            <Dropdown as={Nav.Item}>
+              <Dropdown.Toggle as={Nav.Link} className={getNavLinkClass('/jobs')}>
+                <FaBriefcase className="me-1" />
+                Jobs
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item as={Link} to="/jobs">
+                  <FaSearch className="me-2" />
+                  Browse Jobs
+                </Dropdown.Item>
+                {isAuthenticated && user?.role === 'recruiter' && (
+                  <>
+                    <Dropdown.Divider />
+                    <Dropdown.Item as={Link} to="/jobs/post">
+                      <FaPlus className="me-2" />
+                      Post New Job
+                    </Dropdown.Item>
+                    <Dropdown.Item as={Link} to="/my-jobs">
+                      <FaClipboardList className="me-2" />
+                      My Posted Jobs
+                    </Dropdown.Item>
+                  </>
+                )}
+                {isAuthenticated && user?.role === 'jobseeker' && (
+                  <>
+                    <Dropdown.Divider />
+                    <Dropdown.Item as={Link} to="/saved-jobs">
+                      <FaHeart className="me-2" />
+                      Saved Jobs
+                    </Dropdown.Item>
+                  </>
+                )}
+              </Dropdown.Menu>
+            </Dropdown>
+
+            {/* Applications Dropdown */}
+            {isAuthenticated && (
+              <Dropdown as={Nav.Item}>
+                <Dropdown.Toggle as={Nav.Link}>
+                  <FaFileAlt className="me-1" />
+                  Applications
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {user?.role === 'jobseeker' && (
+                    <Dropdown.Item as={Link} to="/my-applications">
+                      <FaFileAlt className="me-2" />
+                      My Applications
+                    </Dropdown.Item>
+                  )}
+                  {user?.role === 'recruiter' && (
+                    <Dropdown.Item as={Link} to="/applications">
+                      <FaUsers className="me-2" />
+                      View Applications
+                    </Dropdown.Item>
+                  )}
+                </Dropdown.Menu>
+              </Dropdown>
             )}
-            {isAuthenticated && user?.role === 'recruiter' && (
-              <Nav.Link as={Link} to="/my-jobs" className={getNavLinkClass('/my-jobs')}>
-                My Jobs
-              </Nav.Link>
-            )}
+
+            {/* Admin Dropdown */}
             {isAuthenticated && user?.role === 'admin' && (
-              <Nav.Link as={Link} to="/admin" className={getNavLinkClass('/admin')}>
-                Admin Dashboard
+              <Dropdown as={Nav.Item}>
+                <Dropdown.Toggle as={Nav.Link}>
+                  <FaCog className="me-1" />
+                  Admin
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item as={Link} to="/admin/dashboard">
+                    <FaChartBar className="me-2" />
+                    Dashboard
+                  </Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/admin/users">
+                    <FaUsers className="me-2" />
+                    Manage Users
+                  </Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/admin/jobs">
+                    <FaBriefcase className="me-2" />
+                    Manage Jobs
+                  </Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/admin/applications">
+                    <FaFileAlt className="me-2" />
+                    Manage Applications
+                  </Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/admin/analytics">
+                    <FaChartBar className="me-2" />
+                    Analytics
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            )}
+
+            {/* Recruiter Dashboard */}
+            {isAuthenticated && user?.role === 'recruiter' && (
+              <Nav.Link as={Link} to="/recruiter/dashboard" className={getNavLinkClass('/recruiter/dashboard')}>
+                <FaBuilding className="me-1" />
+                Dashboard
+              </Nav.Link>
+            )}
+
+            {/* Job Seeker Dashboard */}
+            {isAuthenticated && user?.role === 'jobseeker' && (
+              <Nav.Link as={Link} to="/dashboard" className={getNavLinkClass('/dashboard')}>
+                <FaUserTie className="me-1" />
+                Dashboard
               </Nav.Link>
             )}
           </Nav>
@@ -97,6 +203,20 @@ const NavigationBar = () => {
           </Form>
 
           <Nav>
+            {/* Quick Post Job Button for Recruiters */}
+            {isAuthenticated && user?.role === 'recruiter' && (
+              <Button 
+                as={Link} 
+                to="/jobs/post" 
+                variant="success" 
+                className="me-2 d-none d-md-inline-block"
+                size="sm"
+              >
+                <FaPlus className="me-1" />
+                Post Job
+              </Button>
+            )}
+
             {isAuthenticated ? (
               <Dropdown align="end">
                 <Dropdown.Toggle variant="outline-primary" className="d-flex align-items-center">
@@ -106,13 +226,58 @@ const NavigationBar = () => {
 
                 <Dropdown.Menu>
                   <Dropdown.Item as={Link} to="/profile">
-                    Profile
+                    <FaUser className="me-2" />
+                    My Profile
                   </Dropdown.Item>
-                  {user?.role === 'jobseeker' && (
-                    <Dropdown.Item as={Link} to="/saved-jobs">
-                      Saved Jobs
-                    </Dropdown.Item>
+                  
+                  {/* Quick Actions based on role */}
+                  {user?.role === 'recruiter' && (
+                    <>
+                      <Dropdown.Item as={Link} to="/jobs/post">
+                        <FaPlus className="me-2" />
+                        Post New Job
+                      </Dropdown.Item>
+                      <Dropdown.Item as={Link} to="/my-jobs">
+                        <FaBriefcase className="me-2" />
+                        My Jobs
+                      </Dropdown.Item>
+                      <Dropdown.Item as={Link} to="/applications">
+                        <FaFileAlt className="me-2" />
+                        View Applications
+                      </Dropdown.Item>
+                    </>
                   )}
+                  
+                  {user?.role === 'jobseeker' && (
+                    <>
+                      <Dropdown.Item as={Link} to="/my-applications">
+                        <FaFileAlt className="me-2" />
+                        My Applications
+                      </Dropdown.Item>
+                      <Dropdown.Item as={Link} to="/saved-jobs">
+                        <FaHeart className="me-2" />
+                        Saved Jobs
+                      </Dropdown.Item>
+                    </>
+                  )}
+                  
+                  {user?.role === 'admin' && (
+                    <>
+                      <Dropdown.Item as={Link} to="/admin/dashboard">
+                        <FaChartBar className="me-2" />
+                        Admin Dashboard
+                      </Dropdown.Item>
+                      <Dropdown.Item as={Link} to="/admin/users">
+                        <FaUsers className="me-2" />
+                        Manage Users
+                      </Dropdown.Item>
+                      <Dropdown.Item as={Link} to="/admin/jobs">
+                        <FaBriefcase className="me-2" />
+                        Manage Jobs
+                      </Dropdown.Item>
+                    </>
+                  )}
+                  
                   <Dropdown.Divider />
                   <Dropdown.Item onClick={handleLogout} className="text-danger">
                     <FaSignOutAlt className="me-2" />

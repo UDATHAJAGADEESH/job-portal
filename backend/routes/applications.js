@@ -179,7 +179,7 @@ router.get('/:id', authenticateToken, async (req, res) => {
                    application.applicant._id.toString() === req.user._id.toString() ||
                    application.recruiter._id.toString() === req.user._id.toString();
 
-    if (!canView) {
+    if (canView) {
       return res.status(403).json({ message: 'Access denied' });
     }
 

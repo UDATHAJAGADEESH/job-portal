@@ -9,6 +9,7 @@ import RecruiterRoute from './components/auth/RecruiterRoute';
 // Layout Components
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
+import FloatingActionButton from './components/layout/FloatingActionButton';
 
 // Public Pages
 import Home from './pages/Home';
@@ -53,6 +54,7 @@ function App() {
       
       <div className="App">
         <Navbar />
+        <FloatingActionButton />
         
         <main className="min-vh-100">
           <Routes>
@@ -94,6 +96,7 @@ function App() {
                 <PostJob />
               </RecruiterRoute>
             } />
+            
             <Route path="/jobs/edit/:id" element={
               <RecruiterRoute>
                 <EditJob />

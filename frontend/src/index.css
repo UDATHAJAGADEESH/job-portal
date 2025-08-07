@@ -337,4 +337,72 @@ code {
   .print-only {
     display: block !important;
   }
+}
+
+/* Floating Action Button */
+.rotate-45 {
+  transform: rotate(45deg);
+  transition: transform 0.3s ease;
+}
+
+/* Quick Access Buttons */
+.quick-access-btn {
+  transition: all 0.3s ease;
+  border-radius: 50px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.85rem;
+}
+
+.quick-access-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Enhanced Dropdown Styles */
+.dropdown-menu {
+  border: none;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 0.5rem 0;
+}
+
+.dropdown-item {
+  padding: 0.75rem 1.5rem;
+  transition: all 0.2s ease;
+  border-radius: 0;
+}
+
+.dropdown-item:hover {
+  background-color: var(--light-color);
+  transform: translateX(5px);
+}
+
+.dropdown-item:active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Navbar Enhancements */
+.navbar-custom .nav-link {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.navbar-custom .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--primary-color);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.navbar-custom .nav-link:hover::after,
+.navbar-custom .nav-link.active::after {
+  width: 100%;
 } 
